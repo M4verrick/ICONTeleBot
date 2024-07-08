@@ -220,17 +220,14 @@ def handle_ids(client, message):
                     "Please send the details in the correct format: User ID + Expected Return Date and Time + Reason.\n\nExample: 0XXXXXXX, 12/8 5:30 PM, Tuition "
                 )
                 return
-            ids = [parts[0].strip()]
-
             id = parts[0].strip()
-            expected_return = parts[1].strip()
-            reason = parts[2].strip()
-
-            if len(ids) > 1:
+            if len(id.split()) != 1:  # Check if there's exactly one ID
                 message.reply_text("Please submit 1 ID at a time for early check out.")
                 return
-
+            expected_return = parts[1].strip()
+            reason = parts[2].strip()
             if len(id) == 8 and id.isdigit() and id.startswith("0") and reason:
+                ids = [id]
                 additional_data = {
                     "expected_return": expected_return,
                     "reason": reason,
